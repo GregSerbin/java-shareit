@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Repository
 public class ItemStorageImpl implements ItemStorage {
     private final Map<Long, Item> items = new HashMap<>();
+    private Long idCounter = 1L;
 
     @Override
     public Item create(Item item) {
@@ -66,7 +67,6 @@ public class ItemStorageImpl implements ItemStorage {
 
     @Override
     public Long getNextId() {
-        // Добавление 1, потому что иначе не проходят тесты в Postman
-        return Long.valueOf(items.size() + 1);
+        return idCounter++;
     }
 }

@@ -79,7 +79,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> search(String text) {
-        if (text.isBlank()) {
+        if (text == null || text.isBlank()) {
             log.info("Запрос на поиск содержит пустую строку");
             return new ArrayList<>();
         }

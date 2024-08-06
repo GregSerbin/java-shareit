@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public class UserStorageImpl implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
+    private Long idCounter = 1L;
 
     @Override
     public User create(User user) {
@@ -65,8 +66,7 @@ public class UserStorageImpl implements UserStorage {
 
     @Override
     public Long getNextId() {
-        // Добавление 1, потому что иначе не проходят тесты в Postman
-        return Long.valueOf(users.size() + 1);
+        return idCounter++;
     }
 
 
