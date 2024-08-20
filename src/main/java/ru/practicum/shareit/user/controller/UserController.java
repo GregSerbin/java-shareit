@@ -31,15 +31,15 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public UserDto delete(@PathVariable Long userId) {
+    public void delete(@PathVariable Long userId) {
         log.info("Получен запрос на удаление пользователя с id={}", userId);
-        return userService.delete(userId);
+        userService.delete(userId);
     }
 
     @GetMapping("/{userId}")
     public UserDto getUserById(@PathVariable Long userId) {
         log.info("Получен запрос на получение пользователя с id={}", userId);
-        return userService.getUserById(userId);
+        return userService.findById(userId);
     }
 
     @GetMapping
