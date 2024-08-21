@@ -91,21 +91,16 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(readOnly = true)
     @Override
     public List<ResponseBookingDto> findByBooker(Long bookerId, State state) {
-//        userRepository.findById(bookerId)
-//                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id=%d не найден", bookerId)));
 
-        List<Booking> bookings;
-
-        switch (state) {
-            case ALL -> bookings = bookingRepository.findByBookerId(bookerId);
-            case PAST -> bookings = bookingRepository.findAllBookingByBookerAndPast(bookerId, LocalDateTime.now());
-            case CURRENT ->
-                    bookings = bookingRepository.findAllBookingByBookerAndCurrent(bookerId, LocalDateTime.now());
-            case FUTURE -> bookings = bookingRepository.findAllBookingByBookerAndFuture(bookerId, LocalDateTime.now());
-            case WAITING -> bookings = bookingRepository.findByBooker_idAndStatus(bookerId, Status.WAITING.name());
-            case REJECTED -> bookings = bookingRepository.findByBooker_idAndStatus(bookerId, Status.REJECTED.name());
-            case null, default -> bookings = new ArrayList<>();
-        }
+        List<Booking> bookings = switch (state) {
+            case ALL -> bookingRepository.findByBookerId(bookerId);
+            case PAST -> bookingRepository.findAllBookingByBookerAndPast(bookerId, LocalDateTime.now());
+            case CURRENT -> bookingRepository.findAllBookingByBookerAndCurrent(bookerId, LocalDateTime.now());
+            case FUTURE -> bookingRepository.findAllBookingByBookerAndFuture(bookerId, LocalDateTime.now());
+            case WAITING -> bookingRepository.findByBooker_idAndStatus(bookerId, Status.WAITING.name());
+            case REJECTED -> bookingRepository.findByBooker_idAndStatus(bookerId, Status.REJECTED.name());
+            case null -> new ArrayList<>();
+        };
 
         log.info("Получен список бронирований пользователя с id={}: {}", bookerId, bookings);
         return bookings.stream()
@@ -119,18 +114,15 @@ public class BookingServiceImpl implements BookingService {
         userRepository.findById(ownerId)
                 .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id=%d не найден", ownerId)));
 
-        List<Booking> bookings;
-
-        switch (state) {
-            case ALL -> bookings = bookingRepository.findAllBookingByOwner(ownerId);
-            case PAST -> bookings = bookingRepository.findAllBookingByOwnerAndPast(ownerId, LocalDateTime.now());
-            case CURRENT -> bookings = bookingRepository.findAllBookingByOwnerAndCurrent(ownerId, LocalDateTime.now());
-            case FUTURE -> bookings = bookingRepository.findAllBookingByOwnerAndFuture(ownerId, LocalDateTime.now());
-            case WAITING -> bookings = bookingRepository.findAllBookingByOwnerAndStatus(ownerId, Status.WAITING.name());
-            case REJECTED ->
-                    bookings = bookingRepository.findAllBookingByOwnerAndStatus(ownerId, Status.REJECTED.name());
-            case null, default -> bookings = new ArrayList<>();
-        }
+        List<Booking> bookings = switch (state) {
+            case ALL -> bookingRepository.findAllBookingByOwner(ownerId);
+            case PAST -> bookingRepository.findAllBookingByOwnerAndPast(ownerId, LocalDateTime.now());
+            case CURRENT -> bookingRepository.findAllBookingByOwnerAndCurrent(ownerId, LocalDateTime.now());
+            case FUTURE -> bookingRepository.findAllBookingByOwnerAndFuture(ownerId, LocalDateTime.now());
+            case WAITING -> bookingRepository.findAllBookingByOwnerAndStatus(ownerId, Status.WAITING.name());
+            case REJECTED -> bookingRepository.findAllBookingByOwnerAndStatus(ownerId, Status.REJECTED.name());
+            case null -> new ArrayList<>();
+        };
 
         log.info("Получен список бронирований владельца с id={}: {}", ownerId, bookings);
         return bookings.stream()

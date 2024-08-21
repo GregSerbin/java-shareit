@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @ToString
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
