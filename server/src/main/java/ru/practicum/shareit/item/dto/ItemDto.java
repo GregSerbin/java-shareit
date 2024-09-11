@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.booking.dto.ResponseBookingDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,5 +25,7 @@ public class ItemDto {
     private List<CommentDto> comments;
     private ResponseBookingDto lastBooking;
     private ResponseBookingDto nextBooking;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private Long requestId;
 }

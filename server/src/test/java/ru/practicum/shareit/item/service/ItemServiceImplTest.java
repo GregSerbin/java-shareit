@@ -9,7 +9,6 @@ import ru.practicum.shareit.booking.dto.RequestBookingDto;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemWithDateDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
@@ -182,7 +181,7 @@ class ItemServiceImplTest {
             itemService.createItem(item, user.getId());
         }
 
-        List<ItemWithDateDto> items = itemService.getAllItemsByOwner(user.getId());
+        List<ItemDto> items = itemService.getAllItemsByOwner(user.getId());
         assertThat(items.size(), equalTo(5));
     }
 

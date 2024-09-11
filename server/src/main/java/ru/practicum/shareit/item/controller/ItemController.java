@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemWithDateDto;
 import ru.practicum.shareit.item.service.ItemService;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemWithDateDto> getAllItemsByOwner(@RequestHeader(SHARER_USER_ID_HEADER) Long ownerId) {
+    public List<ItemDto> getAllItemsByOwner(@RequestHeader(SHARER_USER_ID_HEADER) Long ownerId) {
         log.info("Получен запрос на получение всех предметов пользователя с id={}", ownerId);
         return itemService.getAllItemsByOwner(ownerId);
     }

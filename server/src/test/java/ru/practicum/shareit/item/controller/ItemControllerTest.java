@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemWithDateDto;
 import ru.practicum.shareit.item.service.ItemService;
 
 import java.nio.charset.StandardCharsets;
@@ -138,10 +137,10 @@ class ItemControllerTest {
 
     @Test
     void findByOwnerId() throws Exception {
-        List<ItemWithDateDto> items = new ArrayList<>();
+        List<ItemDto> items = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            ItemWithDateDto item = ItemWithDateDto.builder()
+            ItemDto item = ItemDto.builder()
                     .id(Long.valueOf(i))
                     .name("name " + i)
                     .description("description")

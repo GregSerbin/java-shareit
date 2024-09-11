@@ -13,7 +13,6 @@ import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemWithDateDto;
 import ru.practicum.shareit.item.mapper.CommentMapper;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Comment;
@@ -134,17 +133,17 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ItemWithDateDto> getAllItemsByOwner(Long ownerId) {
+    public List<ItemDto> getAllItemsByOwner(Long ownerId) {
         if (!userRepository.existsById(ownerId)) {
             throw new NotFoundException(String.format("Пользователь с id=%d не найден", ownerId));
         }
 
         List<Item> items = itemRepository.findByOwnerId(ownerId);
-        List<ItemWithDateDto> itemsWithDateDto = items.stream()
-                .map(itemMapper::itemToItemWithDateDto)
+        List<ItemDto> itemsWithDateDto = items.stream()
+                .map(itemMapper::itemToItemDto)
                 .toList();
 
-        for (ItemWithDateDto item : itemsWithDateDto) {
+        for (ItemDto item : itemsWithDateDto) {
             Booking booking = bookingRepository.findByItemId(item.getId());
             List<CommentDto> comment = commentRepository.findByItemId(item.getId()).stream()
                     .map(commentMapper::commentToCommentDto).toList();
